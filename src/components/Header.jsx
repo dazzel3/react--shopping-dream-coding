@@ -1,15 +1,18 @@
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase';
 
 export default function Header() {
+  const [userAuth, setUserAuth] = useState(null);
+
   const handleGoogleLogin = () => {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
+        setUserAuth(result.user);
+        console.log(result.user);
       })
       .catch((error) => {
         console.log(error);
@@ -27,12 +30,24 @@ export default function Header() {
       <Link to='/carts' className='px-4 py-2'>
         Carts
       </Link>
-      <Link to='/products/new' className='px-4 py-2'>
+      {/* <Link to='/products/new' className='px-4 py-2'>
         New
-      </Link>
-      <button className='px-4 py-2' onClick={handleGoogleLogin}>
-        Login
-      </button>
+      </Link> */}
+      <section className='flex items-center gap-1'>
+        {userAuth && (
+          <div className='flex items-center gap-2'>
+            <img
+              src={userAuth.photoURL}
+              alt='user profile'
+              className='w-7 rounded-2xl'
+            />
+            <p>{userAuth.displayName}</p>
+          </div>
+        )}
+        <button className='px-4 py-2' onClick={handleGoogleLogin}>
+          {userAuth ? 'Logout' : 'Login'}
+        </button>
+      </section>
     </header>
   );
 }
