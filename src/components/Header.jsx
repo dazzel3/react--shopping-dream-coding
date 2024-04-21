@@ -9,13 +9,6 @@ export default function Header() {
     onUserStateChange(setUserAuth);
   }, []);
 
-  const handleGoogleLogin = () => {
-    login().then(setUserAuth);
-  };
-  const handleGoogleLogout = () => {
-    logout().then(setUserAuth);
-  };
-
   return (
     <header className='w-full p-4 px-8 flex justify-between items-center border-b border-gray-800 text-base'>
       <Link to='/products' className='px-4 py-2'>
@@ -42,11 +35,11 @@ export default function Header() {
           </div>
         )}
         {userAuth ? (
-          <button className='px-4 py-2' onClick={handleGoogleLogout}>
+          <button className='px-4 py-2' onClick={logout}>
             Logout
           </button>
         ) : (
-          <button className='px-4 py-2' onClick={handleGoogleLogin}>
+          <button className='px-4 py-2' onClick={login}>
             Login
           </button>
         )}
