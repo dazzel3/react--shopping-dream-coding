@@ -1,22 +1,12 @@
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../firebase';
+import { login } from '../firebase';
 
 export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
 
   const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setUserAuth(result.user);
-        console.log(result.user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    login().then(setUserAuth);
   };
 
   return (
