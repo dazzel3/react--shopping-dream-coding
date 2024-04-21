@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../firebase';
+import { login, logout } from '../firebase';
 
 export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
 
   const handleGoogleLogin = () => {
     login().then(setUserAuth);
+  };
+  const handleGoogleLogout = () => {
+    logout().then(setUserAuth);
   };
 
   return (
@@ -34,9 +37,15 @@ export default function Header() {
             <p>{userAuth.displayName}</p>
           </div>
         )}
-        <button className='px-4 py-2' onClick={handleGoogleLogin}>
-          {userAuth ? 'Logout' : 'Login'}
-        </button>
+        {userAuth ? (
+          <button className='px-4 py-2' onClick={handleGoogleLogout}>
+            Logout
+          </button>
+        ) : (
+          <button className='px-4 py-2' onClick={handleGoogleLogin}>
+            Login
+          </button>
+        )}
       </section>
     </header>
   );

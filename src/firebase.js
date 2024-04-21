@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -20,4 +20,8 @@ export async function login() {
       return result.user;
     })
     .catch(console.error);
+}
+
+export async function logout() {
+  return signOut(auth).then(() => null);
 }
