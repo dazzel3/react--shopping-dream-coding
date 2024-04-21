@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -24,4 +24,8 @@ export async function login() {
 
 export async function logout() {
   return signOut(auth).then(() => null);
+}
+
+export function onUserStateChange(callback) {
+  onAuthStateChanged(auth, callback);
 }

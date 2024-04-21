@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { login, logout } from '../firebase';
+import { login, logout, onUserStateChange } from '../firebase';
 
 export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
+
+  useEffect(() => {
+    onUserStateChange(setUserAuth);
+  }, []);
 
   const handleGoogleLogin = () => {
     login().then(setUserAuth);
