@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login, logout, onUserStateChange } from '../firebase';
+import User from './User';
 
 export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
@@ -24,16 +25,7 @@ export default function Header() {
         New
       </Link> */}
       <section className='flex items-center gap-1'>
-        {userAuth && (
-          <div className='flex items-center gap-2'>
-            <img
-              src={userAuth.photoURL}
-              alt='user profile'
-              className='w-7 rounded-2xl'
-            />
-            <p>{userAuth.displayName}</p>
-          </div>
-        )}
+        {userAuth && <User user={userAuth} />}
         {userAuth ? (
           <button className='px-4 py-2' onClick={logout}>
             Logout
