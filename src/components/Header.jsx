@@ -7,7 +7,9 @@ export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
 
   useEffect(() => {
-    onUserStateChange(setUserAuth);
+    onUserStateChange((user) => {
+      setUserAuth(user);
+    });
   }, []);
 
   return (
