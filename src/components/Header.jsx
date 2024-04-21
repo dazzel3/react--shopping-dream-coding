@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { login, logout, onUserStateChange } from '../firebase';
 import User from './User';
+import Button from './ui/Button';
 
 export default function Header() {
   const [userAuth, setUserAuth] = useState(null);
@@ -23,19 +24,17 @@ export default function Header() {
       <Link to='/carts' className='px-4 py-2'>
         Carts
       </Link>
-      {/* <Link to='/products/new' className='px-4 py-2'>
-        New
-      </Link> */}
+      {userAuth && userAuth.isAdmin && (
+        <Link to='/products/new' className='px-4 py-2'>
+          New
+        </Link>
+      )}
       <section className='flex items-center gap-1'>
         {userAuth && <User user={userAuth} />}
         {userAuth ? (
-          <button className='px-4 py-2' onClick={logout}>
-            Logout
-          </button>
+          <Button text={'logout'} onClick={logout} />
         ) : (
-          <button className='px-4 py-2' onClick={login}>
-            Login
-          </button>
+          <Button text={'login'} onClick={login} />
         )}
       </section>
     </header>
