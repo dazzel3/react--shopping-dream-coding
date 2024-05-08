@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../components/ui/Button';
 import { uploadImage } from '../api/uploader';
+import { addNewProduct } from '../api/firebase';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -8,7 +9,10 @@ export default function NewProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    uploadImage(file).then((url) => console.log(url));
+    uploadImage(file).then((url) => {
+      console.log(url);
+      addNewProduct(product, url);
+    });
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
