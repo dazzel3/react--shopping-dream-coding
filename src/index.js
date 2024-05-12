@@ -6,11 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import Main from './pages/Main';
-import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import NewProduct from './pages/NewProduct';
 import Carts from './pages/Carts';
 import ProtectedRoute from './pages/ProtectedRoute';
+import AllProducts from './pages/AllProducts';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Main /> },
-      { path: '/products', element: <Products /> },
+      { path: '/products', element: <AllProducts /> },
       {
         path: '/products/new',
         element: (
