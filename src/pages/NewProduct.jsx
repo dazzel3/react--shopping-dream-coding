@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../components/ui/Button';
 import { uploadImage } from '../api/uploader';
 import { addNewProduct } from '../api/firebase';
@@ -8,6 +8,7 @@ export default function NewProduct() {
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+  const fileInputRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,11 +18,22 @@ export default function NewProduct() {
         addNewProduct(product, url).then(() => {
           setSuccess('제품이 등록되었습니다.');
           setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
+            handleInitializeState();
+          }, 3000);
         });
       })
       .finally(() => setIsUploading(false));
+  };
+  const handleInitializeState = () => {
+    setSuccess(null);
+    setProduct({});
+    setFile(null);
+
+    console.log(fileInputRef);
+    if (fileInputRef) {
+      fileInputRef.current.value = '';
+    }
+    console.log(fileInputRef);
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -49,6 +61,7 @@ export default function NewProduct() {
           accept='image/*'
           name='file'
           required
+          ref={fileInputRef}
           onChange={handleChange}
         />
         <input
