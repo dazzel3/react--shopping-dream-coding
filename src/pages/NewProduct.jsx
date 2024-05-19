@@ -98,8 +98,8 @@ export default function NewProduct() {
         />
         <input
           type='text'
-          name='options'
-          value={product.options ?? ''}
+          name='option'
+          value={product.option ?? ''}
           placeholder='옵션: 콤마(,)로 구분'
           required
           onChange={handleChange}
