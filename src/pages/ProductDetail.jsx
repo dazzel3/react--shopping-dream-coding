@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import { setCart } from '../api/firebase';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function ProductDetail() {
+  const { uid } = useAuthContext();
   const {
     state: {
-      product: { image, title, description, price, option },
+      product: { id, image, title, description, price, option },
     },
   } = useLocation();
   const [selected, setSelected] = useState(option && option[0]);
   const handleSelect = (e) => setSelected(e.target.value);
-  const handleClick = (e) => {};
+  const handleClick = () => {
+    const product = { id, image, title, price, option: selected, quantity: 1 };
+    setCart(uid, product);
+  };
 
   return (
     <section className='flex flex-col md:flex-row p-4 text-stone-800'>
