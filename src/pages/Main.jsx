@@ -1,5 +1,11 @@
 import React from 'react';
+import Products from '../components/Products';
 
 export default function Main() {
-  return <div>Main</div>;
+  return (
+    <>
+      <img className='w-full mb-4' src='/images/banner.png' alt='core banner' />
+      <Products />
+    </>
+  );
 }
