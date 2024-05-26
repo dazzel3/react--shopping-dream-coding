@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import User from './User';
 import Button from './ui/Button';
 import { useAuthContext } from '../context/AuthContext';
+import CartBadge from './CartBadge';
 
 export default function Header() {
   const { userAuth, login, logout } = useAuthContext();
@@ -16,7 +17,7 @@ export default function Header() {
       </Link>
       {userAuth && (
         <Link to='/carts' className='px-4 py-2'>
-          Carts
+          <CartBadge />
         </Link>
       )}
       {userAuth && userAuth.isAdmin && (
