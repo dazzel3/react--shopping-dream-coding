@@ -29,11 +29,9 @@ export default function NewProduct() {
     setProduct({});
     setFile(null);
 
-    console.log(fileInputRef);
     if (fileInputRef) {
       fileInputRef.current.value = '';
     }
-    console.log(fileInputRef);
   };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
