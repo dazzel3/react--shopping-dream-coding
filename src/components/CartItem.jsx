@@ -1,17 +1,18 @@
 import React from 'react';
-import { removeCart, setCart } from '../api/firebase';
+import useCart from '../hooks/useCart';
 
 export default function CartItem({
   product,
   product: { id, image, title, option, quantity, price },
-  uid,
 }) {
+  const { setItem, removeItem } = useCart();
   const handleMinus = () => {
     if (quantity < 2) return;
-    setCart(uid, { ...product, quantity: quantity - 1 });
+    setItem.mutate({ ...product, quantity: quantity - 1 });
   };
-  const handlePlus = () => setCart(uid, { ...product, quantity: quantity + 1 });
-  const handleDelete = () => removeCart(uid, id);
+  const handlePlus = () =>
+    setItem.mutate({ ...product, quantity: quantity + 1 });
+  const handleDelete = () => removeItem.mutate(id);
 
   return (
     <li className='flex justify-between my-2 items-center gap-5'>

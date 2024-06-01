@@ -1,20 +1,16 @@
 import React from 'react';
-import { useAuthContext } from '../context/AuthContext';
-import { useQuery } from '@tanstack/react-query';
-import { getCart } from '../api/firebase';
 import { Link } from 'react-router-dom';
 import CartItem from '../components/\bCartItem';
 import PriceCard from '../components/PriceCard';
 import Button from '../components/ui/Button';
+import useCart from '../hooks/useCart';
 
 const SHIPPING_PRICE = 3000;
 
 export default function Carts() {
-  const { uid } = useAuthContext();
-  const { isLoading, data: products } = useQuery({
-    queryKey: ['carts'],
-    queryFn: () => getCart(uid),
-  });
+  const {
+    cartQuery: { isLoading, data: products },
+  } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -44,7 +40,7 @@ export default function Carts() {
           <ul className='border-b border-stone-200 mb-5'>
             {products &&
               products.map((product) => (
-                <CartItem key={product.id} product={product} uid={uid} />
+                <CartItem key={product.id} product={product} />
               ))}
           </ul>
           <div className='mb-5 w-3/5 absolute right-16'>
