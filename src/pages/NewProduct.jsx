@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Button from '../components/ui/Button';
 import { uploadImage } from '../api/uploader';
-import { addNewProduct } from '../api/firebase';
+import useProducts from '../hooks/useProducts';
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -9,18 +9,24 @@ export default function NewProduct() {
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
   const fileInputRef = useRef(null);
+  const { addProduct } = useProducts();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
     uploadImage(file)
       .then((url) => {
-        addNewProduct(product, url).then(() => {
-          setSuccess('제품이 등록되었습니다.');
-          setTimeout(() => {
-            handleInitializeState();
-          }, 3000);
-        });
+        addProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess('제품이 등록되었습니다.');
+              setTimeout(() => {
+                handleInitializeState();
+              }, 3000);
+            },
+          }
+        );
       })
       .finally(() => setIsUploading(false));
   };
